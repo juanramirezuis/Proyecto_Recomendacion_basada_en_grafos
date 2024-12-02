@@ -1,0 +1,2 @@
+
+Nota: En dado caso que el archivo recomendación Anime con su grafo no lea algunas librerías, recomendable darle primero "run a debug" y "Trust workspace & Continue" , para posteriormente compilarlo y que funcione con normalidad.
