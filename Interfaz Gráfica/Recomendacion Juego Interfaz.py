@@ -9,16 +9,12 @@ from random import sample #Utilza para seleccionar 10 elementos aleatorios en la
 import sys #usada en la lineas 211-215
 
 #cada libreria se instala con pip (nombre libreria install)
-
+#recoradar cambiar cada una de las rutas de seleccion de archivo por la correspondiente
 df_Juegos = pd.read_excel("D:\\JMRS\\Descargas\\Proyecto_Matematicas_Discretas_2024-2\\Proyecto_Matematicas_Discretas_2024-2\\Listado de juegos.xlsx")#ingresar dirección del archivo excel que venía en el winrar
 g_Juegos = nx.Graph()#grafo
-
-
-#creación del nodo
+# Creación del nodo
 class Juego:
-
     def __init__(self, Nombre, GeneroA, GeneroB, Empresa, Año, Desarrolladores):
-
         self.Nombre = Nombre
         self.GeneroA = GeneroA
         self.GeneroB = GeneroB
@@ -27,19 +23,16 @@ class Juego:
         self.Desarrolladores = Desarrolladores
 
     def imprimir_Juego(self):
-
         print("Juego:", self.Nombre)
         print("Genero A:", self.GeneroA)
         print("Genero B:", self.GeneroB)
         print("Empresa:", self.Empresa)
         print("Año:", self.Año)
-        #
 
-#Dataframe
+
+# Creación de la lista de juegos y nodos del grafo
 l_Juegos = []
 for index, row in df_Juegos.iterrows():
-
-    #DATAFRAME SE USA LIBRERIA PANDA, LAS PALABRAS RESERVADAS AQUÍ SON LAS UTILIZADAS PARA LA CREACIÓN DE LAS COLUMNAS DEL DATAFRAME
     Nombre = row['Nombre']
     GeneroA = row['GeneroA']
     GeneroB = row['GeneroB']
@@ -47,57 +40,44 @@ for index, row in df_Juegos.iterrows():
     Año = row['Año']
     Desarrolladores = row['Desarrolladores']
 
-    #CREACIÓN OBJETO
+    # Creación del objeto Juego
     Juego_instance = Juego(Nombre, GeneroA, GeneroB, Empresa, Año, Desarrolladores)
     g_Juegos.add_node(Juego_instance)
     l_Juegos.append(Juego_instance)
-#
 
-
-#creación del grafo
-for i in range(len(l_Juegos)): #LEN CONTAR NUMERO DE ELEMENTOS EN LA LISTA L_Juegos
-
+# Creación del grafo
+for i in range(len(l_Juegos)):  # Contar número de elementos en la lista l_Juegos
     current_Juego = l_Juegos[i]
-
     for j in range(i + 1, len(l_Juegos)):
-
         next_Juego = l_Juegos[j]
-
         weight = 0
-        #contar similitudes
-        #categorias
+        # Contar similitudes
         if current_Juego.GeneroA == next_Juego.GeneroA or current_Juego.GeneroA == next_Juego.GeneroB:
             weight += 1
         if current_Juego.GeneroB == next_Juego.GeneroA or current_Juego.GeneroB == next_Juego.GeneroB:
             weight += 1
-        #Studio
         if current_Juego.Empresa == next_Juego.Empresa:
             weight += 1
-        #año
         if current_Juego.Año == next_Juego.Año:
             weight += 1
-        #Seiyus
-        if current_Juego.Desarrolladores == next_Juego.Desarrolladores :
+        if current_Juego.Desarrolladores == next_Juego.Desarrolladores:
             weight += 1
 
-        #aristas agregadas al grafo g_Juegos, las aristas son el número (peso) de similitudes
-        if weight == 1:
-            g_Juegos.add_edge(current_Juego, next_Juego, weight=1)
-        elif weight == 2:
-            g_Juegos.add_edge(current_Juego, next_Juego, weight=2)
-        elif weight == 3:
-            g_Juegos.add_edge(current_Juego, next_Juego, weight=3)
-        elif weight == 4:
-            g_Juegos.add_edge(current_Juego, next_Juego, weight=4)
-#
+        # Agregar aristas al grafo g_Juegos
+        if weight > 0:
+            g_Juegos.add_edge(current_Juego, next_Juego, weight=weight)
+
+# Definir la disposición para los nodos y etiquetas
 pos = nx.spring_layout(g_Juegos)  # Define una disposición para los nodos (puedes ajustar esto según tus preferencias)
-labels = {anime: anime.Nombre for anime in l_Juegos}  # Etiquetas para los nodos
+labels = {juego: juego.Nombre for juego in l_Juegos}  # Etiquetas para los nodos
 
-# Dibuja nodos y aristas
-nx.draw(g_Juegos, pos, with_labels=False, font_weight='bold', node_size=50)
-nx.draw_networkx_labels(g_Juegos, pos, labels, font_size=8)
+# Dibujar nodos y aristas
+plt.figure(figsize=(12, 8))
+nx.draw(g_Juegos, pos, with_labels=False, node_color="#FFB6C1", edge_color="#ADD8E6", font_weight='bold', node_size=300, alpha=0.7)
+nx.draw_networkx_labels(g_Juegos, pos, labels, font_size=10, font_color="#4B0082")
 
-plt.title('Grafo de Juegos')
+# Añadir título y mejorar la visualización
+plt.title('Grafo de Juegos', fontsize=15, color="#4B0082", pad=20)
 plt.show()
 
 
