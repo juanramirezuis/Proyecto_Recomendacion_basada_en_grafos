@@ -3,17 +3,17 @@
 ## Grupo F3
 ### Integrantes
 - **Juan Manuel Ramírez Salamanca**  
-  - Matrícula: 2192279  
+  - Código: 2192279  
   - Email: juanramirezuis@gmail.com  
   - Rol: Líder, escritor del código y del notebook.
 
 - **Diego Andrés Duque Meza**  
-  - Matrícula: 2221102  
+  - Código: 2221102  
   - Email: sofysanchez03@gmail.com  
   - Rol: Diseño del póster y análisis del problema.
 
 - **Karen Sofía Sánchez Castañeda**  
-  - Matrícula: 2211855  
+  - Código: 2211855  
   - Email: londonofabian95@gmail.com  
   - Rol: Material de apoyo y documentación del código.
 
